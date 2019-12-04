@@ -1,0 +1,301 @@
+Nessun Allarme
+01-Manca la marcia
+02-Fungo sinistro premuto
+03-Fungo destro premuto
+04-Extra corsa sterzo
+05-Lift feedback
+06-Errore posizione
+07-Sick anteriore S300
+08-Mancato magnete
+09-Sick posteriore S300
+10-Errore azzeramento encoder sollevamento
+11-Lettura errata catarifrangenti
+12-Errore azionamento trazione
+13-Errore azionamento sterzo
+14-Errore apertura file
+15-Tastatore forche non premuto
+16-Stato logico diverso da stato fisico
+17-Drive feedback
+18-Steer feedback
+19-Errore nel file percorsi
+20-Pallet non trovato in trazione
+21-Pieno su pieno
+22-Forche non in quota
+23-Stand by da PC
+24-Allarme temperatura motore trazione
+25-Tastatore ancora premuto
+26-Carica batteria non funzionante
+27-Coordinate errate da NAV350
+28-Allarme temperatura motore sterzo
+29-BATTERIA SCARICA!!!
+30-Pulsante abilitazione movimenti non premuto
+31-Manca comunicazione con supervisione
+32-Agv in stand-by
+33-Timeout attesa segnale
+34-Fungo emergenza tastiera premuto
+35-Errore slittamento
+36-TASTIERA NON INSERITA IN MANUALE
+37-Errore centralina sicurezza Sick
+38-Temperatura alta pompa olio
+39-Time out forche 
+40-Errore comunicazione testa laser
+41-Errore azionamento pompa
+42-Errore encoder MOC Sick
+43-Errore comunicazione con batteria
+44-Free
+45-Lift_Trigg_Error
+46-Fungo anteriore premuto
+47-Errore AGV inatteso carico
+48-Errore AGV inatteso scarico
+49-Errore AGV in postazione errata
+50-Errore postazione prenotata da altro AGV
+51-Errore AGV in postazione inesistente
+52-Extra corsa sollevamento
+53-allarme fuga encoder
+54-Errore doppio nodo
+55-Altezza montante troppo alta
+56-Errore ripristino
+57-Errore velocità encoder
+58-altezza forche non corretta
+59-errore feedback frenata
+60-errore feedback cmd KM0
+61-errore feedback KM0
+62-errore coerenza FeedBack-KM0
+63
+64
+65
+66 
+67 
+68
+69 
+70 
+71 
+72 
+73
+74 
+75 
+76
+77
+78
+79
+80
+81
+82 
+83
+84
+85
+86
+87 
+88
+89
+90
+91
+92
+93
+94 Agv Escluso da PC
+95 CARICA BATTERIE DIFETTOSO
+96
+97
+98 CARRELLO SPENTO O COMUNICAZIONE INTERROTTA
+99 COMUNICAZIONE INTERROTTA
+100
+01 Manca Start
+02 Fungo dx
+03 Fungo sx
+04 Extra corsa Sterzo
+05 Lift feedback
+06 Errore posizione
+07 Sick anteriore
+08 Errore XRANGE
+09 Sick posteriore
+10 Errore riferimento forche
+11 Nessusa confidenza
+12 Errore azionamento trazione
+13 Errore azionamento sterzo
+14 Errore apertura file
+15 Errore hrange forche
+16 Stato logico diverso stato fisico
+17 Drive feedback
+18 Steer feedback
+19 Errore nel file percorsi
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31 Manca comunicazione con PC supervisione
+32 LGV IN STAND BY
+33
+34
+35
+36 
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46 
+47 
+48
+49 
+50 
+51
+52
+53
+54
+55
+56
+57 
+58
+59 
+60
+61
+62 
+63
+64 
+65
+66 
+67 
+68
+69 
+70 
+71 
+72 
+73
+74 
+75 
+76
+77
+78
+79
+80
+81
+82 
+83
+84
+85
+86
+87 
+88
+89
+90
+91
+92
+93
+94 Agv Escluso da PC
+95 CARICA BATTERIE DIFETTOSO
+96 AGV in Attesa di CONSENSO al passaggio
+97
+98 CARRELLO SPENTO O COMUNICAZIONE INTERROTTA
+99 COMUNICAZIONE INTERROTTA
+200 Generazione Missioni Disabilitato
+201 
+202 Nessuna posizione di magazzino trovata per Tipologia
+203 Comunicazione con plc Incas non funzionante
+204 
+205 
+206
+207
+208
+209
+210 Nessuna posizione di appoggio trovata per Tipologia - Linea 1
+211 Nessuna posizione di appoggio trovata per Tipologia - Linea 2 
+212 Nessuna posizione di appoggio trovata per Tipologia - Linea 3 
+213 Nessuna posizione di appoggio trovata per Tipologia - Linea 4 
+214 Nessuna posizione di appoggio trovata per Tipologia - Linea 5
+215 Nessuna posizione di appoggio trovata per Tipologia - Linea 6
+216 Nessuna posizione di appoggio trovata per Tipologia - Linea 7
+217 Nessuna posizione di appoggio trovata per Tipologia - Linea 8
+218 Nessuna posizione di appoggio trovata per Tipologia - Linea 9
+219 Nessuna posizione di appoggio trovata per Tipologia - Avvolgitore - DA NON AVVOLGERE
+220 Posizione di deposito avvolgitore ESCLUSA da operatore
+221 Posizione di prelievo avvolgitore ESCLUSA da operatore
+222 Posizione di deposito montacarichi ESCLUSA da operatore
+223 
+224 
+225 Nessun deposito possibile per i Pallet Vuoti
+226 Nessun Vuoto in magazzino disponibile per lo sfogliatore
+227
+228
+229
+301 
+302 
+303 
+304
+305
+306
+307
+308
+330
+301 
+302 
+303 
+304
+305
+306
+307
+308
+340
+301 
+302 
+303 
+304
+305
+306
+307
+308
+350
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
