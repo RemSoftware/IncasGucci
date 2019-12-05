@@ -419,7 +419,7 @@ void __fastcall TTDMgestionePLC::TimerEventiTimer(TObject *Sender)
         MainForm->alarmmissioni = 0;
     }
 
-    ControlloIngressoFasciatore();
+    //ControlloIngressoFasciatore();
 	ControlloSemaforo();
     ControlloIncrocioAGV1();
     
@@ -432,6 +432,7 @@ void __fastcall TTDMgestionePLC::TimerEventiTimer(TObject *Sender)
 
 void TTDMgestionePLC::ControlloIngressoFasciatore()
 {
+    /*
     int i, j, res = 0, agv, baia, multidep, newdest, destprec, iningombro = 0;
     Evento ev;
     // gestione iingresso prelievo/deposito avvolgitore
@@ -540,7 +541,7 @@ void TTDMgestionePLC::ControlloIngressoFasciatore()
 		dmDB->LogMsg("Resetto consenso dato ad agv in posizione "+IntToStr(MainForm->DatiAgv[1].pos));
 		MainForm->DatiAgv[1].consensodato = 0 ;
 	}
-
+   */
 }
 
 //---------------------------------------------------------------------------
