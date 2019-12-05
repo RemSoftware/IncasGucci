@@ -1384,16 +1384,16 @@ void TMainForm::AggiornaMappa()
                             //PanelIncrocio->Top = PosCella->Top + 10;
                             //PanelIncrocio->Left = PosCella->Left + 40;
                             
-                            PanelSemaforo->Visible = true;
-                            PanelSemaforo->Top = PosCella->Top;
-                            PanelSemaforo->Left = PosCella->Left + 30;
+                            //PanelSemaforo->Visible = true;
+                            //PanelSemaforo->Top = PosCella->Top;
+                            //PanelSemaforo->Left = PosCella->Left + 30;
                         } 
                         
                         if (idimg == SCARICO1) //SEMAFORO SU : In mezzo al percorso tra CAR e SCAR
                         {
-                            //PanelSemaforo->Visible = true;
-                            //PanelSemaforo->Top = PosCella->Top;
-                            //PanelSemaforo->Left = PosCella->Left + 410;
+                            PanelSemaforo->Visible = true;
+                            PanelSemaforo->Top = PosCella->Top;
+                            PanelSemaforo->Left = PosCella->Left + 410;
                         }
                         
 						if (!dmDB->QueryPos->FieldByName("Pos")->AsInteger == POS_PREL_FALDE &&
