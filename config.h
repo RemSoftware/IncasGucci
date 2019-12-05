@@ -44,6 +44,7 @@ __published:	// IDE-managed Components
 	TCheckBox *AbilitaLuci;
     TBitBtn *BitBtn1;
     TLabeledEdit *nPallet;
+    TLabeledEdit *LabeledEdit1;
 	void __fastcall FormActivate(TObject *Sender);
 	void __fastcall BitBtnChangeClick(TObject *Sender);
 	void __fastcall BitBtn2Click(TObject *Sender);

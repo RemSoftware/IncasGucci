@@ -26,6 +26,7 @@ void __fastcall TfrConfig::FormActivate(TObject *Sender) {
 	AbilitaMissioni->Checked = MainForm->AbilitaMissioni;
 	AbilitaLuci->Checked = MainForm->AbilitaTestLuciPulsantiere;
 	LabeledEdit6->Text = MainForm->PosizioniLuceRossaSemaforo;
+	LabeledEdit1->Text = MainForm->PosizioniLuceGiallaSemaforo;
     //nPallet->Text = dmDB->TabParametri[103]["INTVALUE"].ToIntDef(0);
 	//AbilitaLuci->Visible = MainForm->pwdlevel ;
 
@@ -66,6 +67,7 @@ void __fastcall TfrConfig::BitBtnChangeClick(TObject *Sender)
 		MainForm->AbilitaTestLuciPulsantiere = AbilitaLuci->Checked;   */
 	}
 	MainForm->PosizioniLuceRossaSemaforo = LabeledEdit6->Text;
+	MainForm->PosizioniLuceGiallaSemaforo = LabeledEdit1->Text;
     
 	if (MainForm->AbilitaMissioni != AbilitaMissioni->Checked) {
 		MainForm->AbilitaMissioni = AbilitaMissioni->Checked;

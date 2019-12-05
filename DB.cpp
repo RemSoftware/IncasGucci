@@ -1011,6 +1011,7 @@ void TdmDB::LeggiStatoAgv() {
 							MainForm->DisabilitaTelecamera = Query2->FieldByName("Abilitazioni")->AsInteger & MainForm->bit[2];
 							MainForm->PrioritaMagazzino = Query2->FieldByName("Abilitazioni")->AsInteger & MainForm->bit[3];
                             MainForm->PosizioniLuceRossaSemaforo = Query2->FieldByName("PosizioniLuceRossaSemaforo")->AsString;
+                            MainForm->PosizioniLuceGiallaSemaforo = Query2->FieldByName("PosizioniLuceGiallaSemaforo")->AsString;
 							//MainForm->DatiPlc.h_prel = Query2->FieldByName("HPrelRulliera")->AsInteger ;
 							//MainForm->poscb[1] = Query2->FieldByName("PosCb1")->AsInteger ;
 							//MainForm->static_battery = Query2->FieldByName("StaticCb")->AsInteger ;
@@ -1120,6 +1121,7 @@ void TdmDB::AggiornaStatoAgv(int agv) {
 
 					stringa = stringa + " , Abilitazioni = " + IntToStr(abilitazioni);
 					stringa = stringa + " , PosizioniLuceRossaSemaforo = '"+MainForm->PosizioniLuceRossaSemaforo+"'";
+					stringa = stringa + " , PosizioniLuceGiallaSemaforo = '"+MainForm->PosizioniLuceGiallaSemaforo+"'";
                 }
                 stringa = stringa + " , Allarmi = '" + allarmi + "' where id = " + IntToStr(i);
 

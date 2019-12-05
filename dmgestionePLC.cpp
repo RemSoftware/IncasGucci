@@ -98,7 +98,9 @@ void __fastcall TTDMgestionePLC::TimerPlcTimer(TObject *Sender)
 
 		//OUT
 		MainForm->PlcIncas.consenso_impegno_incrocio = MainForm->PlcIncas.uscitedascrivere & MainForm->bit[MainForm->PlcIncas.bit_consenso_impegno_incrocio];
-        MainForm->PlcIncas.agv_in_passaggio = MainForm->PlcIncas.uscitedascrivere & MainForm->bit[MainForm->PlcIncas.bit_agv_in_passaggio];
+        MainForm->PlcIncas.impegno_inc_rosso = MainForm->PlcIncas.uscitedascrivere & MainForm->bit[MainForm->PlcIncas.bit_impegno_inc_rosso];
+        MainForm->PlcIncas.impegno_inc_giallo = MainForm->PlcIncas.uscitedascrivere & MainForm->bit[MainForm->PlcIncas.bit_impegno_inc_giallo];
+        MainForm->PlcIncas.impegno_inc_verde = MainForm->PlcIncas.uscitedascrivere & MainForm->bit[MainForm->PlcIncas.bit_impegno_inc_verde];
         
 
 		// gestione watchdog
@@ -297,6 +299,22 @@ int TTDMgestionePLC::AgvInPosLuceSemaforoRossa()
 	for (i = 1; i <= N_carrelli; i++) 
     {
 		if (MainForm->PosizioniLuceRossaSemaforo.Pos(";" + IntToStr(MainForm->DatiAgv[i].pos) + ";")) 
+        {
+			res = i;
+			break;
+		}
+	}
+	return res;
+}
+
+//---------------------------------------------------------------------------
+
+int TTDMgestionePLC::AgvInPosLuceSemaforoGialla()
+{
+	int i, res = 0;
+	for (i = 1; i <= N_carrelli; i++) 
+    {
+		if (MainForm->PosizioniLuceGiallaSemaforo.Pos(";" + IntToStr(MainForm->DatiAgv[i].pos) + ";")) 
         {
 			res = i;
 			break;
@@ -529,22 +547,48 @@ void TTDMgestionePLC::ControlloIngressoFasciatore()
 
 void TTDMgestionePLC::ControlloSemaforo()
 {
-    int setta_luce_rossa;
+    int setta_luce_rossa, setta_luce_gialla;
     try 
     {  
         if (!MainForm->PlcIncas.forzatura_attiva)
         {
-            //gestione semaforo
+            //gestione ROSSO semaforo
             setta_luce_rossa = AgvInPosLuceSemaforoRossa();
-            if ((!MainForm->PlcIncas.agv_in_passaggio) && (setta_luce_rossa)) 
+            setta_luce_gialla = AgvInPosLuceSemaforoGialla();
+            
+            if ((!MainForm->PlcIncas.impegno_inc_rosso) && (setta_luce_rossa)) 
             {
-                MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[MainForm->PlcIncas.bit_agv_in_passaggio];
-                dmDB->LogMsg("Spengo Luce Verde a Accendo Rossa con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
+                MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[MainForm->PlcIncas.bit_impegno_inc_rosso];
+                dmDB->LogMsg("Accendo Luce Rossa con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
             }
-            else if ((MainForm->PlcIncas.agv_in_passaggio) &&(!setta_luce_rossa)) 
+            else if ((MainForm->PlcIncas.impegno_inc_rosso) &&(!setta_luce_rossa)) 
             {
-		    	MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[MainForm->PlcIncas.bit_agv_in_passaggio];
-                dmDB->LogMsg("Spengo Luce Rossa a Accendo Verde con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
+		    	MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[MainForm->PlcIncas.bit_impegno_inc_rosso];
+                dmDB->LogMsg("Spengo Luce Rossa con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
+            }
+            
+            //gestione GIALLO semaforo
+            if ((!MainForm->PlcIncas.impegno_inc_giallo) && (setta_luce_gialla)) 
+            {
+                MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[MainForm->PlcIncas.bit_impegno_inc_giallo];
+                dmDB->LogMsg("Accendo Luce Gialla con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
+            }
+            else if ((MainForm->PlcIncas.impegno_inc_giallo) &&(!setta_luce_gialla)) 
+            {
+		    	MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[MainForm->PlcIncas.bit_impegno_inc_giallo];
+                dmDB->LogMsg("Spengo Luce Gialla con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
+            }
+            
+            //gestione VERDE semaforo
+            if ((!MainForm->PlcIncas.impegno_inc_verde) && (!setta_luce_rossa) && (!setta_luce_gialla)) 
+            {
+                MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[MainForm->PlcIncas.bit_impegno_inc_verde];
+                dmDB->LogMsg("Accendo Luce Verde con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
+            }
+            else if ((MainForm->PlcIncas.impegno_inc_verde) && (setta_luce_rossa || setta_luce_gialla)) 
+            {
+		    	MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[MainForm->PlcIncas.bit_impegno_inc_verde];
+                dmDB->LogMsg("Spengo Luce Verde con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
             }
         }
     }

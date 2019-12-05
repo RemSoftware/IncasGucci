@@ -308,7 +308,7 @@ inherited frConfig: TfrConfig
     end
     object Panel5: TPanel
       Left = 1
-      Top = 325
+      Top = 374
       Width = 1143
       Height = 33
       Align = alTop
@@ -319,6 +319,7 @@ inherited frConfig: TfrConfig
       ParentBackground = False
       TabOrder = 1
       Visible = False
+      ExplicitTop = 325
     end
     object Panel8: TPanel
       Left = 1
@@ -355,7 +356,6 @@ inherited frConfig: TfrConfig
       BevelOuter = bvLowered
       TabOrder = 3
       Visible = False
-      ExplicitLeft = 2
       object leHPrel: TLabeledEdit
         Left = 888
         Top = 6
@@ -389,14 +389,14 @@ inherited frConfig: TfrConfig
       Align = alTop
       Alignment = taLeftJustify
       BevelOuter = bvLowered
-      Caption = ' Impostazione Posizioni Luce Rossa Semaforo (;posizione;)'
+      Caption = ' Impostazione Posizioni Luci Semaforo (;posizione;)'
       TabOrder = 4
     end
     object Panel15: TPanel
       Left = 1
       Top = 157
       Width = 1143
-      Height = 42
+      Height = 91
       Align = alTop
       Alignment = taLeftJustify
       BevelOuter = bvLowered
@@ -412,10 +412,21 @@ inherited frConfig: TfrConfig
         LabelPosition = lpLeft
         TabOrder = 0
       end
+      object LabeledEdit1: TLabeledEdit
+        Left = 251
+        Top = 42
+        Width = 546
+        Height = 27
+        EditLabel.Width = 231
+        EditLabel.Height = 19
+        EditLabel.Caption = 'Posizioni con Luce Gialla Accesa '
+        LabelPosition = lpLeft
+        TabOrder = 1
+      end
     end
     object Panel6: TPanel
       Left = 1
-      Top = 283
+      Top = 332
       Width = 1143
       Height = 42
       Align = alTop
@@ -423,6 +434,7 @@ inherited frConfig: TfrConfig
       BevelOuter = bvLowered
       TabOrder = 6
       Visible = False
+      ExplicitTop = 283
       object cbEscludiPorta3: TCheckBox
         Left = 16
         Top = 11
@@ -458,7 +470,7 @@ inherited frConfig: TfrConfig
     end
     object Panel7: TPanel
       Left = 1
-      Top = 241
+      Top = 290
       Width = 1143
       Height = 42
       Align = alTop
@@ -466,6 +478,7 @@ inherited frConfig: TfrConfig
       BevelOuter = bvLowered
       TabOrder = 7
       Visible = False
+      ExplicitTop = 241
       object lePortaAperta2: TLabeledEdit
         Left = 392
         Top = 9
@@ -501,7 +514,7 @@ inherited frConfig: TfrConfig
     end
     object Panel9: TPanel
       Left = 1
-      Top = 199
+      Top = 248
       Width = 1143
       Height = 42
       Align = alTop
@@ -509,6 +522,7 @@ inherited frConfig: TfrConfig
       BevelOuter = bvLowered
       TabOrder = 8
       Visible = False
+      ExplicitTop = 199
       object lePortaAperta1: TLabeledEdit
         Left = 392
         Top = 6

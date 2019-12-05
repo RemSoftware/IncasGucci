@@ -36,6 +36,7 @@ public:		// User declarations
     //void GetArrivalTime(int nLinea, int input, int bit);
     //void InitStatoLinee();
     int AgvInPosLuceSemaforoRossa();
+    int AgvInPosLuceSemaforoGialla();
     int PosInIngombroAGV1(int pos);
     
 	bool init;

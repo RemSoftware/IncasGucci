@@ -202,6 +202,7 @@ __published:
     TPanel *PanelIncrocio;
     TShape *VerdeIncrocio;
     TShape *RossoIncrocio;
+    TShape *Giallo;
 
     void __fastcall bEsciClick(TObject *Sender);
     void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
@@ -490,17 +491,20 @@ public:
 
         //IN
 		int richiesta_impegno_incrocio;
-		int addr_richiesta_impegno_incrocio;
 		int bit_richiesta_impegno_incrocio;
         
         //OUT
 		int consenso_impegno_incrocio;         //per la gestione incrocio con AGV1
-		int addr_consenso_impegno_incrocio;
 		int bit_consenso_impegno_incrocio;
 
-		int agv_in_passaggio;          //per la gestione semaforo  nel corridoio
-		int addr_agv_in_passaggio;
-		int bit_agv_in_passaggio;
+		int impegno_inc_rosso;             //per la gestione semaforo  nel corridoio
+		int bit_impegno_inc_rosso;       
+
+		int impegno_inc_giallo;             
+		int bit_impegno_inc_giallo;       
+
+		int impegno_inc_verde;             
+		int bit_impegno_inc_verde;       
 
 		int lgv_in_marcia;
 		int lgv_in_allarme;
@@ -620,7 +624,7 @@ public:
     Allarmi gAllarmi;
     int pwdlevel, all;
     unsigned char bit[8], bitAnd[8];
-    AnsiString PWD, RobotAddress, PosizioniLuceRossaSemaforo;
+    AnsiString PWD, RobotAddress, PosizioniLuceRossaSemaforo, PosizioniLuceGiallaSemaforo;
     int RobotPort, baiaformSegnali, TouchPanel, stationnumber, onlyelectrode, EnableManuals, countwatchdog, actual, prev, num_stazioni;
     bool Simula, formbaiaattivo, forzature_attive;
     AnsiString msg, timestr, NomeClient, format_data_ora_datatbase, CorsiaDiDefault, CorsiaDiScarto;

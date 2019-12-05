@@ -736,7 +736,9 @@ void __fastcall TMainForm::FormCreate(TObject *Sender)
 	
     //OUT
 	PlcIncas.bit_consenso_impegno_incrocio = 0;
-    PlcIncas.bit_agv_in_passaggio = 1;
+    PlcIncas.bit_impegno_inc_rosso = 1;
+    PlcIncas.bit_impegno_inc_giallo = 2;
+    PlcIncas.bit_impegno_inc_verde = 3;
 
 	//---------------------------------------
     
@@ -1378,17 +1380,20 @@ void TMainForm::AggiornaMappa()
                         
                         if (idimg == CARICO3) //SEMAFORO SU : Posizione carico 3 - vicino a dove c'è l'incrocio
                         {
-                            PanelIncrocio->Visible = true;
-                            PanelIncrocio->Top = PosCella->Top + 10;
-                            PanelIncrocio->Left = PosCella->Left + 40;
+                            //PanelIncrocio->Visible = true;
+                            //PanelIncrocio->Top = PosCella->Top + 10;
+                            //PanelIncrocio->Left = PosCella->Left + 40;
                             
+                            PanelSemaforo->Visible = true;
+                            PanelSemaforo->Top = PosCella->Top;
+                            PanelSemaforo->Left = PosCella->Left + 30;
                         } 
                         
                         if (idimg == SCARICO1) //SEMAFORO SU : In mezzo al percorso tra CAR e SCAR
                         {
-                            PanelSemaforo->Visible = true;
-                            PanelSemaforo->Top = PosCella->Top;
-                            PanelSemaforo->Left = PosCella->Left + 410;
+                            //PanelSemaforo->Visible = true;
+                            //PanelSemaforo->Top = PosCella->Top;
+                            //PanelSemaforo->Left = PosCella->Left + 410;
                         }
                         
 						if (!dmDB->QueryPos->FieldByName("Pos")->AsInteger == POS_PREL_FALDE &&
@@ -2489,11 +2494,12 @@ void __fastcall TMainForm::TimerSinotticoTimer(TObject * Sender)
 		}  */
 
         //Semafori
-        Rosso->Visible = PlcIncas.agv_in_passaggio;
-        Verde->Visible = !PlcIncas.agv_in_passaggio;
+        Rosso->Visible = PlcIncas.impegno_inc_rosso;
+        Giallo->Visible = PlcIncas.impegno_inc_giallo;
+        Verde->Visible = PlcIncas.impegno_inc_verde;
 
-        RossoIncrocio->Visible = !PlcIncas.consenso_impegno_incrocio;
-        VerdeIncrocio->Visible = PlcIncas.consenso_impegno_incrocio;
+        //RossoIncrocio->Visible = !PlcIncas.consenso_impegno_incrocio;
+        //VerdeIncrocio->Visible = PlcIncas.consenso_impegno_incrocio;
 
         
 		/*Oggetto = (TMyShape*) ScrollBox1->FindComponent("Pos" + IntToStr(MainForm->PlcMonta.posprel));
