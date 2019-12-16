@@ -5,10 +5,6 @@ object dmDB: TdmDB
   Width = 291
   object ADOConnection1: TADOConnection
     CommandTimeout = 10
-    Connected = True
-    ConnectionString = 
-      'Provider=SQLOLEDB.1;Password=pwd;Persist Security Info=True;User' +
-      ' ID=sa;Initial Catalog=DivaLgv;Data Source=127.0.0.1'
     ConnectionTimeout = 5
     ConnectOptions = coAsyncConnect
     LoginPrompt = False
@@ -79,9 +75,6 @@ object dmDB: TdmDB
   end
   object FMConnection: TADOConnection
     CommandTimeout = 10
-    ConnectionString = 
-      'Provider=SQLOLEDB.1;Password=pwd;Persist Security Info=True;User' +
-      ' ID=sa;Initial Catalog=DivaLgv;Data Source=127.0.0.1'
     ConnectionTimeout = 5
     ConnectOptions = coAsyncConnect
     LoginPrompt = False
