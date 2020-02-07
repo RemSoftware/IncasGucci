@@ -3,8 +3,8 @@ object PosVuotiForm: TPosVuotiForm
   Top = 0
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
-  ClientHeight = 168
-  ClientWidth = 572
+  ClientHeight = 289
+  ClientWidth = 561
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,10 +19,10 @@ object PosVuotiForm: TPosVuotiForm
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 572
+    Width = 561
     Height = 32
     Align = alTop
-    Caption = 'Segnali Incrocio'
+    Caption = 'Segnali PLC'
     Ctl3D = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
@@ -33,12 +33,12 @@ object PosVuotiForm: TPosVuotiForm
     ParentCtl3D = False
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 482
+    ExplicitWidth = 572
   end
   object Panel4: TPanel
     Left = 0
-    Top = 119
-    Width = 572
+    Top = 240
+    Width = 561
     Height = 49
     Align = alBottom
     BevelOuter = bvLowered
@@ -49,10 +49,10 @@ object PosVuotiForm: TPosVuotiForm
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
-    ExplicitTop = 168
-    ExplicitWidth = 482
+    ExplicitTop = 119
+    ExplicitWidth = 572
     object SpeedButton1: TSpeedButton
-      Left = 152
+      Left = 147
       Top = 7
       Width = 129
       Height = 38
@@ -62,7 +62,7 @@ object PosVuotiForm: TPosVuotiForm
       Caption = 'Refresh Mode'
     end
     object BitBtn2: TBitBtn
-      Left = 291
+      Left = 286
       Top = 6
       Width = 129
       Height = 38
@@ -78,10 +78,10 @@ object PosVuotiForm: TPosVuotiForm
     end
   end
   object GroupBox3: TGroupBox
-    Left = 5
-    Top = 37
-    Width = 266
-    Height = 73
+    Left = 8
+    Top = 96
+    Width = 254
+    Height = 139
     Caption = 'Segnali d'#39'Ingresso'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -106,8 +106,8 @@ object PosVuotiForm: TPosVuotiForm
     end
     object BitBtn6: TBitBtn
       Tag = 1
-      Left = 172
-      Top = 25
+      Left = 165
+      Top = 107
       Width = 80
       Height = 25
       Caption = 'Set'
@@ -122,10 +122,10 @@ object PosVuotiForm: TPosVuotiForm
     end
   end
   object GroupBox4: TGroupBox
-    Left = 278
-    Top = 37
-    Width = 285
-    Height = 73
+    Left = 267
+    Top = 96
+    Width = 292
+    Height = 140
     Caption = 'Segnali Uscita'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -135,8 +135,8 @@ object PosVuotiForm: TPosVuotiForm
     ParentFont = False
     TabOrder = 3
     object cbConsensoIncrocio: TCheckBox
-      Left = 9
-      Top = 21
+      Left = 15
+      Top = 22
       Width = 158
       Height = 25
       Caption = 'Consenso Impegno Incrocio'
@@ -150,8 +150,8 @@ object PosVuotiForm: TPosVuotiForm
     end
     object BitBtn1: TBitBtn
       Tag = 1
-      Left = 176
-      Top = 20
+      Left = 200
+      Top = 106
       Width = 83
       Height = 25
       Caption = 'Set'
@@ -164,11 +164,181 @@ object PosVuotiForm: TPosVuotiForm
       TabOrder = 1
       OnClick = BitBtn1Click
     end
+    object cbSegnalazioneRosso: TCheckBox
+      Left = 15
+      Top = 47
+      Width = 138
+      Height = 25
+      Caption = 'Segnalazione Rosso'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+    end
+    object cbSegnalazioneGiallo: TCheckBox
+      Left = 15
+      Top = 73
+      Width = 133
+      Height = 25
+      Caption = 'Segnalazione Giallo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+    end
+    object cbSegnalazioneVerde: TCheckBox
+      Left = 15
+      Top = 99
+      Width = 133
+      Height = 25
+      Caption = 'Segnalazione Verde'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+    end
+  end
+  object Panel7: TPanel
+    Left = 10
+    Top = 39
+    Width = 547
+    Height = 53
+    BevelOuter = bvLowered
+    TabOrder = 4
+    object Label3: TLabel
+      Left = 310
+      Top = 18
+      Width = 61
+      Height = 13
+      Caption = 'Cycle Time : '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lCycle: TLabel
+      Left = 377
+      Top = 19
+      Width = 12
+      Height = 13
+      Caption = '0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label6: TLabel
+      Left = 451
+      Top = 18
+      Width = 36
+      Height = 13
+      Caption = 'Errors :'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lErrors: TLabel
+      Left = 497
+      Top = 18
+      Width = 6
+      Height = 13
+      Caption = '0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Panel15: TPanel
+      Left = 13
+      Top = 13
+      Width = 125
+      Height = 25
+      Alignment = taRightJustify
+      BevelInner = bvRaised
+      BevelOuter = bvLowered
+      Caption = 'Connesso     '
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clBlue
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+      object Shape4: TShape
+        Left = 4
+        Top = 4
+        Width = 21
+        Height = 17
+        Brush.Color = clLime
+        Shape = stCircle
+      end
+    end
+    object GroupBox1: TGroupBox
+      Left = 152
+      Top = 6
+      Width = 139
+      Height = 33
+      Caption = 'Watch Dog'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      object Label9: TLabel
+        Left = 7
+        Top = 16
+        Width = 13
+        Height = 13
+        Caption = 'Plc'
+      end
+      object lWatchDogPlc: TLabel
+        Left = 26
+        Top = 16
+        Width = 6
+        Height = 13
+        Caption = '0'
+      end
+      object Label12: TLabel
+        Left = 70
+        Top = 16
+        Width = 11
+        Height = 13
+        Caption = 'Pc'
+      end
+      object lWatchDogPc: TLabel
+        Left = 91
+        Top = 16
+        Width = 6
+        Height = 13
+        Caption = '0'
+      end
+    end
   end
   object Timer1: TTimer
     Enabled = False
+    Interval = 400
     OnTimer = Timer1Timer
-    Left = 479
-    Top = 127
+    Left = 461
+    Top = 228
   end
 end

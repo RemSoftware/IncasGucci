@@ -66,7 +66,7 @@ void TMainForm::LeggiParametri() {
 
     if ((f = fopen("params.txt", "r")) == NULL) {
 
-		strcpy(File_name, "IncasGucci.crs");
+		strcpy(File_name, "GucciLGV.crs");
 
         return;
 
@@ -461,8 +461,8 @@ void __fastcall TMainForm::FormCreate(TObject *Sender)
     num_stazioni = 9;
     baiaformSegnali = 0;
     LeggiParametri();
-	tab.Load1("IncasGucci.crs");
-	f = fopen("IncasGucci.crs", "r");
+	tab.Load1("GucciLGV.crs");
+	f = fopen("GucciLGV.crs", "r");
     if (f == NULL) {
 
         // exit(-1);
@@ -1231,7 +1231,7 @@ void TMainForm::AggiornaMappa()
     double x, y, posx, posy, xselezione1, xselezione2, yselezione1, yselezione2;
     int imgw, imgh, countrecord, changestep, nobarra, escludi = 0, prenotata = 0, cellaTop, cellaLeft, i;
     int pos, piano, idimg, pianimax, tipo_pallet;
-    int numpallet = 0;
+    AnsiString numpallet = "";
     TMyShape *PosCella;
     /* TLabel *Lab ;
      TTime TempoDisegnaMappa ; */
@@ -1284,7 +1284,8 @@ void TMainForm::AggiornaMappa()
                         prenotata = 1;
 
 					tipo_pallet = dmDB->QueryPos->FieldByName("TipoPallet")->AsInteger;
-					numpallet = dmDB->QueryPos->FieldByName("IdUdc")->AsInteger;
+                    numpallet = dmDB->AlmenoUnUdcInPos(dmDB->QueryPos->FieldByName("Pos")->AsInteger);
+					//numpallet = dmDB->QueryPos->FieldByName("IdUdc")->AsString;
 					PosCella = (TMyShape*) ScrollBox1->FindComponent("Pos" + dmDB->QueryPos->FieldByName("Pos")->AsString);
                     if (PosCella == NULL) {
                         // Lab->SendToBack();
@@ -1349,27 +1350,13 @@ void TMainForm::AggiornaMappa()
 							PosCella->Visible = false;
 
 						if (!dmDB->QueryPos->FieldByName("PosInputPlc")->AsInteger) {
-							if (!numpallet)
+							if (numpallet == "" || numpallet == NULL)
 								PosCella->Brush->Style = bsClear;
-							else if (numpallet  &&
+							else if ((numpallet != "" && numpallet != NULL)  &&
 									 dmDB->QueryPos->FieldByName("Pos")->AsString != POS_PREL_FALDE &&
 									 dmDB->QueryPos->FieldByName("Pos")->AsString != POS_PREL_VUOTI)
 								PosCella->Brush->Color = clAqua;
                         }
-						if (dmDB->QueryPos->FieldByName("TipoPosizione")->AsInteger == DEF_TYPE )
-						{
-							 if (dmDB->QueryPos->FieldByName("PresenzaPallet")->AsInteger &&
-								 !dmDB->QueryPos->FieldByName("IdUdc")->AsInteger)
-                             {
-                                 PosCella->Brush->Color = clAqua;
-                             }
-                             //con tabella FM
-							 else if (dmDB->QueryPos->FieldByName("IdUdc")->AsInteger)
-								PosCella->Brush->Color = clAqua;
-                             // VUOTI
-                             else
-								PosCella->Brush->Style = bsClear;
-						}
 
                         if (idimg == PlcFascia.posdep) //Avvolgitore
                         {
@@ -1400,7 +1387,7 @@ void TMainForm::AggiornaMappa()
 							!dmDB->QueryPos->FieldByName("Pos")->AsInteger == POS_PREL_VUOTI &&
                             !dmDB->QueryPos->FieldByName("PosInputPlc")->AsInteger)
 						{
-						    PosCella->Text = IntToStr(numpallet);
+						    PosCella->Text = numpallet;
                         }
                         if (prenotata) {
                             PosCella->Pen->Color = clBlue;
@@ -2539,6 +2526,7 @@ void __fastcall TMainForm::TimerSinotticoTimer(TObject * Sender)
         if (counterAzzeraUdc == 0) 
         {
             dmDB->AggiornaESvuotaPosDeposito();   
+            dmDB->CaricaTabelle();
             aggiornamappa = 1; 
         } 
     }
@@ -2774,7 +2762,14 @@ void __fastcall TMainForm::ResetBtnClick(TObject *Sender)
 void __fastcall TMainForm::PanelIncrocioMouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y)
 {
-    PosVuotiForm->Show();
+//    PosVuotiForm->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TMainForm::PanelSemaforoMouseDown(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y)
+{
+    PosVuotiForm->Show();    
 }
 //---------------------------------------------------------------------------
 

@@ -98,15 +98,15 @@ void __fastcall TfMissioniWms::BtnAbortClick(TObject *Sender)
     {
 		Query1->Close();
 		Query1->SQL->Clear();
-		Query1->SQL->Append( "UPDATE MissioniWms SET stato = " + IntToStr(STATO_ABORTPC) + " WHERE ID = " + IntToStr(progr));
+		Query1->SQL->Append( "UPDATE MissioniWms SET StatoMissione = " + IntToStr(STATO_ABORTPC) + " WHERE Progressivo = " + IntToStr(progr));
 		Query1->ExecSQL();
 		Query1->Close();
 
-        dmDB->UpdatePosCarico(nPos, 0, 0);   //mette UDC = 0  e ID caricamento = 0
+        dmDB->UpdatePosCarico(posCliente, "", 0);   //mette UDC = 0  e ID caricamento = 0
         dmDB->CaricaTabelle();
         MainForm->aggiornamappa = 1;
         
-		dmDB->LogMsg("Abort missione da Pagina caricamento (stato 66) ID = "+ IntToStr(progr));
+		dmDB->LogMsg("Abort missione da Pagina caricamento (StatoMissione 66) Progressivo = "+ IntToStr(progr));
 
 		FormActivate(Sender);
 	}
@@ -123,7 +123,7 @@ void __fastcall TfMissioniWms::BtnDeleteClick(TObject *Sender)
     {
 		Query1->Close();
 		Query1->SQL->Clear();
-		Query1->SQL->Append( "UPDATE MissioniWms SET stato = " + IntToStr(STATO_CANCELLATA) + " WHERE ID = " + IntToStr(progr));
+		Query1->SQL->Append( "UPDATE MissioniWms SET StatoMissione = " + IntToStr(STATO_CANCELLATA) + " WHERE Progressivo = " + IntToStr(progr));
 		Query1->ExecSQL();
 		Query1->Close();
 		FormActivate(Sender);
@@ -134,8 +134,8 @@ void __fastcall TfMissioniWms::BtnDeleteClick(TObject *Sender)
 
 void __fastcall TfMissioniWms::DBGrid1CellClick(TColumn *Column)
 {
-	BtnAbort->Enabled = Query1->RecNo && (Query1->FieldByName("Stato")->AsInteger == STATO_INSERITA || Query1->FieldByName("Stato")->AsInteger == STATO_INCARICO);
-	BtnDelete->Enabled = MainForm->pwdlevel && Query1->RecNo && (Query1->FieldByName("Stato")->AsInteger > STATO_DEPOSITATA);
+	BtnAbort->Enabled = Query1->RecNo && (Query1->FieldByName("StatoMissione")->AsInteger == STATO_INSERITA || Query1->FieldByName("StatoMissione")->AsInteger == STATO_INCARICO);
+	BtnDelete->Enabled = MainForm->pwdlevel && Query1->RecNo && (Query1->FieldByName("StatoMissione")->AsInteger > STATO_DEPOSITATA);
 }
 //---------------------------------------------------------------------------
 

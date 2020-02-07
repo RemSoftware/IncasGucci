@@ -53,6 +53,7 @@ __published:	// IDE-managed Components
     TBitBtn *InsertBtn;
     TLabel *Label11;
     TLabel *Label10;
+    TLabel *Label12;
 	void __fastcall BtnDeleteClick(TObject *Sender);
 	void __fastcall FormActivate(TObject *Sender);
 	void __fastcall NMisCheckClick(TObject *Sender);

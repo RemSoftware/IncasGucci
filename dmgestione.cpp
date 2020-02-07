@@ -236,13 +236,13 @@ void __fastcall TDMGestioneEventi::DataModuleCreate(TObject * Sender) {
 void __fastcall TDMGestioneEventi::TimerMissioniTimer(TObject * Sender) 
 {
 	int agv, i, posdep, posprel, pianodep, j, tipo_pal_udc, corsia_dest, mis_scarto_generata,scarto = 0;
-    int priorita, dafasciare, line, ret, nLinea, nID, nIDudc, opposta, stato, prioritamag, tipoPallet;
+    int priorita, dafasciare, line, ret, nLinea, nID, opposta, stato, prioritamag, tipoPallet;
 	TADOQuery *ADOQuery;
     TDateTime dtInizio;
 	TMissione m;
     TRecordList TabListaMissioniPerAgv;
 	AnsiString strsql,stringa, corsia_dest_ricevuta, msgstr, OraMis, namePrel, nameDest, sSSCC;
-    AnsiString custPosPrel, custPosDep;
+    AnsiString custPosPrel, custPosDep, sIDudc;
     TLGV lgv;
 
     // timer per generazione nuove missoni
@@ -268,7 +268,7 @@ void __fastcall TDMGestioneEventi::TimerMissioniTimer(TObject * Sender)
                 //-------------------------------------------------------------------
                 if ((!MainForm->DatiAgv[1].generata ) && (MainForm->AbilitaMissioni))
                 {
-                    posprel = GetMissioniWMS(nID, posdep, nIDudc, dtInizio, custPosPrel, custPosDep, tipoPallet);
+                    posprel = GetMissioniWMS(nID, posdep, sIDudc, dtInizio, custPosPrel, custPosDep, tipoPallet);
                     if ((posprel > 0) && (posdep > 0))
                     {
                         line = 1;
@@ -280,7 +280,7 @@ void __fastcall TDMGestioneEventi::TimerMissioniTimer(TObject * Sender)
                         m.formato_pallet = 0;
                         m.Source =  custPosPrel;
                         m.Dest = custPosDep;
-                        m.IdUdc = nIDudc;   //
+                        m.IdUdc = sIDudc;   //
                         m.progressivo_missione = nID;
                         m.tipo_pallet = tipoPallet;
                         dmDB->GeneraMissione(m);
@@ -385,7 +385,7 @@ void __fastcall TDMGestioneEventi::TimerMissioniTimer(TObject * Sender)
 
 // ---------------------------------------------------------------------------
 //
-int TDMGestioneEventi::GetMissioniWMS(int &nID, int &nPosDep, int &nIDudc, TDateTime &dtInizio, AnsiString &custPosPrel, AnsiString &custPosDep, int &tipoPallet)
+int TDMGestioneEventi::GetMissioniWMS(int &nID, int &nPosDep, AnsiString &sIDudc, TDateTime &dtInizio, AnsiString &custPosPrel, AnsiString &custPosDep, int &tipoPallet)
 {
     int ret = 0;
     TADOQuery *ADOQuery;
@@ -394,7 +394,7 @@ int TDMGestioneEventi::GetMissioniWMS(int &nID, int &nPosDep, int &nIDudc, TDate
     int pp, pd;
     bool bMod = false;
     nID = 0;
-    nIDudc = 0;
+    sIDudc = "";
     nPosDep = 0;
     custPosPrel = "";
     custPosDep = "";
@@ -430,13 +430,13 @@ int TDMGestioneEventi::GetMissioniWMS(int &nID, int &nPosDep, int &nIDudc, TDate
                     nID = ADOQuery->FieldByName("Progressivo")->AsInteger;
                     nPosPrel = dmDB->TabCustomerPos[ADOQuery->FieldByName("PosizionePrelievo")->AsString]["POS"].ToIntDef(0); //dmDB->PosizioneDaCustomerPos(ADOQuery->FieldByName("PosizionePrelievo")->AsString);
                     nPosDep = dmDB->TabCustomerPos[ADOQuery->FieldByName("PosizioneDeposito")->AsString]["POS"].ToIntDef(0); //dmDB->PosizioneDaCustomerPos(ADOQuery->FieldByName("PosizioneDeposito")->AsString);
-                    nIDudc = ADOQuery->FieldByName("IDUDC")->AsInteger;
+                    sIDudc = ADOQuery->FieldByName("IDUDC")->AsString;
                     dtInizio = ADOQuery->FieldByName("DataOra")->AsDateTime;
                     custPosPrel = ADOQuery->FieldByName("PosizionePrelievo")->AsString;
                     custPosDep = ADOQuery->FieldByName("PosizioneDeposito")->AsString;
                     tipoPallet = ADOQuery->FieldByName("TipoUdc")->AsInteger;
                 
-                    dmDB->UpdatePosCarico(nPosPrel, nIDudc, nID);   //
+                    dmDB->UpdatePosCarico(custPosPrel, sIDudc, nID);   //
                     break;
                 }
                 ADOQuery->Next();

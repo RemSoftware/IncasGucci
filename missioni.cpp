@@ -117,7 +117,7 @@ void __fastcall TfMissioni::NMisCheckClick(TObject *Sender)
 	if ((CheckBox5->Checked)&&(Edit1->Text.ToIntDef(0))) {
 		if (filtro)
 			filter = filter + " AND ";
-		filter = filter +"IdUdc = " + Edit1->Text;
+		filter = filter +"IdUdc LIKE %" + Edit1->Text+"%";
 		filtro = true;
 	}
 	if (FilterOnDateTo->Checked) {

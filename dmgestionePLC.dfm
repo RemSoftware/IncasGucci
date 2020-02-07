@@ -11,6 +11,7 @@ object TDMgestionePLC: TTDMgestionePLC
   end
   object TimerPlc: TTimer
     Enabled = False
+    Interval = 500
     OnTimer = TimerPlcTimer
     Left = 104
     Top = 24

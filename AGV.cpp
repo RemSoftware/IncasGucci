@@ -177,7 +177,7 @@ void __fastcall TfAGV::frAgvL1ForzaIdCoilsuAgv1Click(TObject *Sender)
 	if (MainForm->DatiAgv[1].load) {
 		code = InputBox(L"Inserire Codice", L"Codice Udc", L"0");
 		if (code != "0")
-			MainForm->DatiAgv[1].IdUdc = StrToInt(code) ;
+			MainForm->DatiAgv[1].IdUdc = code;
 	}
 }
 //---------------------------------------------------------------------------

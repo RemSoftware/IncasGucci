@@ -39,9 +39,13 @@ __published: // IDE-managed Components
     TLabel *Label1;
     TEdit *eH2;
     TLabel *Label2;
-    TEdit *eUDC;
-    TSpeedButton *CancellaUDCbtn;
     TLabel *Label3;
+    TGroupBox *GroupBox1;
+    TGroupBox *GroupBox4;
+    TEdit *eUDC1;
+    TSpeedButton *CancellaUDC1btn;
+    TEdit *eUDC2;
+    TSpeedButton *CancellaUDC2btn;
 
     void __fastcall FormActivate(TObject *Sender);
     void __fastcall Timer1Timer(TObject *Sender);
@@ -57,7 +61,8 @@ __published: // IDE-managed Components
     void __fastcall ckDisabilitaPosClick(TObject *Sender);
     void __fastcall cPrenotataPosClick(TObject *Sender);
     void __fastcall SpeedButton3Click(TObject *Sender);
-    void __fastcall CancellaUDCbtnClick(TObject *Sender);
+    void __fastcall CancellaUDC1btnClick(TObject *Sender);
+    void __fastcall CancellaUDC2btnClick(TObject *Sender);
 
 private: // User declarations
         public : // User declarations

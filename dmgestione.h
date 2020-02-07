@@ -33,7 +33,7 @@ private: // User declarations
     int AgvInDestCb(int agv);
     void PalletPrelevatoDepositatoSuPressa(int pos, int prelevato);
     int AgvInUscitaPrelievoFasciatore();
-    int GetMissioniWMS(int &nID, int &nPosDep, int &nIDudc, TDateTime &dtInizio, AnsiString &custPosPrel, AnsiString &custPosDep, int &tipoPallet); 
+    int GetMissioniWMS(int &nID, int &nPosDep, AnsiString &sIDudc, TDateTime &dtInizio, AnsiString &custPosPrel, AnsiString &custPosDep, int &tipoPallet); 
     int GetDestinazioneFromRobot(int posprel, int linea, TDateTime dtInizio); 
 	int RitornaLineaPrelievoDaPos(int pos) ;
 	int AgvInIngombroVuoti(int agv) ;

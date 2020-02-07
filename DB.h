@@ -38,7 +38,7 @@ typedef struct {
 	int formato_pallet ;
     int progressivo_missione;
     int programma_fasciatura;
-	int IdUdc;
+	AnsiString IdUdc;
 	AnsiString Source;
 	AnsiString Dest;
 } TMissione;
@@ -134,7 +134,7 @@ private: // User declarations
     int CreaIdArticolo();
     void ModificaCodiceArticoloUdc(int IdArticolo, AnsiString Codice);
     int RicercaDeposito(int tipopallet, TMissione &m, AnsiString corsiaimpostata = "");
-	void ArticoloPrelevatoDepositato(int pos, int idArticolo, int presenza);
+	void ArticoloPrelevatoDepositato(int pos, AnsiString idArticolo, int presenza);
     void SettaCorsiaInUso(int corsia, int prelievo, int setta);
     void AbilitaCorsia(int corsia, int setta);
     int UdcPresenteInArchivio(int udc);
@@ -219,7 +219,7 @@ private: // User declarations
 	void SettaCorsiaVuota(int corsia, int setta);
     int CreaIdUDC();
     int UpdateSoloStato(int pos, int prenota, int escludi);
-    int UpdatePosCarico(int Pos, int tudc, int idcar);
+    int UpdatePosCarico(AnsiString PosCli, AnsiString tudc, int idcar);
     int InsertCaricamento(int linea, int udc, int pos); 
     int UpdateStatoCaricamento(int ID, int stato);
     AnsiString GetDataCaricamento(int nLinea);
@@ -232,6 +232,7 @@ private: // User declarations
     int PosizioneDaCustomerPos(AnsiString customerpos);
     int AggiornaESvuotaPosDeposito();
     void PrenotaPosIntera(int pos,int prenota); 
+    AnsiString AlmenoUnUdcInPos(int pos); 
 
 
     TIndexList m_TabCorsie, TabParametri;

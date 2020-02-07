@@ -70,7 +70,13 @@ void __fastcall TFormPlcCarico::FormActivate(TObject *Sender)
 	//
 	//change_udc = false;
 	activate = true;
-    GroupBox2->Visible = true;
+    //GroupBox2->Visible = true;
+    Label1->Visible = true;
+    eH2->Visible = true;
+    eUDC1->Visible = false;
+    CancellaUDC1btn->Visible = false;
+    eUDC2->Visible = false;
+    CancellaUDC2btn->Visible = false;
 
     if (m_nType == LINEASCAR_TYPE)
     {
@@ -80,8 +86,19 @@ void __fastcall TFormPlcCarico::FormActivate(TObject *Sender)
     else
     {
         if (pos == FASCIATORE)
-            GroupBox2->Visible = false;
+        {
+            //GroupBox2->Visible = false;
+            Label1->Visible = false;
+            eH2->Visible = false;
+        }
+        else
+        {
+            eUDC2->Visible = true;
+            CancellaUDC2btn->Visible = true;
+        }
             
+        eUDC1->Visible = true;
+        CancellaUDC1btn->Visible = true;
         Label26->Caption = "H.Prel";
         Label1->Caption = "H.Prel";
     }
@@ -166,6 +183,8 @@ void TFormPlcCarico::AggiornaCampiPlc()
         //eUDC->Text = IntToStr(StructPlc.PrelievoINC.IdUdcLetto);  //
     }
     */
+    eUDC1->Text = m_TabPosizioni1[0]["IDUDC"];        
+    eUDC2->Text = m_TabPosizioni2[0]["IDUDC"]; 
 }
 
 void __fastcall TFormPlcCarico::FormClose(TObject *Sender, TCloseAction &Action)
@@ -358,16 +377,34 @@ void __fastcall TFormPlcCarico::SpeedButton3Click(TObject *Sender)
 }
 // ---------------------------------------------------------------------------
 
-void __fastcall TFormPlcCarico::CancellaUDCbtnClick(TObject *Sender)
+void __fastcall TFormPlcCarico::CancellaUDC1btnClick(TObject *Sender)
 {
-
-	if ((eUDC->Text.ToIntDef(0)) && (MainForm->pwdlevel)) 
+	if ((eUDC1->Text != "" && eUDC1->Text != NULL) && (MainForm->pwdlevel)) 
     {
         if (Application->MessageBox(L"Sei sicuro di voler cancellare l'UDC?", L"Conferma!!!", MB_YESNO) == IDYES) 
         {
-            eUDC->Text = "0";
+            eUDC1->Text = "";
             dmDB->SvuotaPosizione(Label24->Caption);
             dmDB->CaricaTabelle();
+            dmDB->CaricaTabella("Posizioni where Pos = " + IntToStr(pos) + " AND Piano = 1", m_TabPosizioni1);
+            dmDB->CaricaTabella("Posizioni where Pos = " + IntToStr(pos) + " AND Piano = 2", m_TabPosizioni2);
+        }
+	    FormActivate(this);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFormPlcCarico::CancellaUDC2btnClick(TObject *Sender)
+{
+	if ((eUDC2->Text != "" && eUDC2->Text != NULL) && (MainForm->pwdlevel)) 
+    {
+        if (Application->MessageBox(L"Sei sicuro di voler cancellare l'UDC?", L"Conferma!!!", MB_YESNO) == IDYES) 
+        {
+            eUDC2->Text = "";
+            dmDB->SvuotaPosizione(Label3->Caption);
+            dmDB->CaricaTabelle();
+            dmDB->CaricaTabella("Posizioni where Pos = " + IntToStr(pos) + " AND Piano = 1", m_TabPosizioni1);
+            dmDB->CaricaTabella("Posizioni where Pos = " + IntToStr(pos) + " AND Piano = 2", m_TabPosizioni2);
         }
 	    FormActivate(this);
 	}

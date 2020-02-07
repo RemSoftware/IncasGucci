@@ -59,7 +59,7 @@ void __fastcall TTDMgestionePLC::DataModuleCreate(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TTDMgestionePLC::TimerPlcTimer(TObject *Sender)
 {
-	int i, j, posagv, destagv, pal_dx_agv, pal_sx_agv, livellobatagv, misincorso, statoagv, statoattualeagv, in_marcia;
+	int i, j, posagv, destagv, pal_dx_agv, pal_sx_agv, livellobatagv, misincorso, statoagv, statoattualeagv, in_marcia, muscite, mdascrivere;
 	AnsiString stringa, stringa_allarme, stringa_allarme_dascrivere,codice_sscc;
 	char code[24];
 
@@ -107,14 +107,14 @@ void __fastcall TTDMgestionePLC::TimerPlcTimer(TObject *Sender)
         if ((PLCThread[0]->connected) && (!MainForm->Simula))
 		{
 			PLCThread[0]->watchdog_plc = (PLCThread[0]->DB[PLCThread[0]->dbwatchdog_plc][PLCThread[0]->wordwatchdog_plc] & MainForm->bit[1]) ? 1 : 0;
-            PLCThread[0]->watchdog_pc = (PLCThread[0]->DB[PLCThread[0]->dbwatchdog_pc][PLCThread[0]->wordwatchdog_pc] & MainForm->bit[2]) ? 1 : 0;
+            PLCThread[0]->watchdog_pc = (PLCThread[0]->DB[PLCThread[0]->dbwatchdog_pc][PLCThread[0]->wordwatchdog_pc] & MainForm->bit[4]) ? 1 : 0;
 
             if ((PLCThread[0]->watchdog_pc != PLCThread[0]->watchdog_plc) && (PLCThread[0]->connected))
             {
                 if (PLCThread[0]->watchdog_plc) 
-                    MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[2];  //bit 2 scritto da P.
+                    MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[4];  //bit 2 scritto da P.
                 else
-                    MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[2];  //bit 2 scritto da P.
+                    MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[4];  //bit 2 scritto da P.
 
 				if (PLCThread[0]->alarm_watchdog) 
                 {
@@ -134,9 +134,14 @@ void __fastcall TTDMgestionePLC::TimerPlcTimer(TObject *Sender)
 					PLCThread[0]->count_alarm_watchdog = 0;
                 }
 			}
-			if (MainForm->PlcIncas.uscitedascrivere != MainForm->PlcIncas.uscite) {
+			if (MainForm->PlcIncas.uscitedascrivere != MainForm->PlcIncas.uscite) 
+            {
 				PLCThread[0]->WriteByte(MainForm->PlcIncas.dbuscite, MainForm->PlcIncas.dwuscite, MainForm->PlcIncas.uscitedascrivere, MainForm->Simula);
-				dmDB->LogMsg("Modificato uscite su prelievo Lgv valore prec : " + IntToStr(MainForm->PlcIncas.uscite) + " , nuovo : " + IntToStr(MainForm->PlcIncas.uscitedascrivere));
+                //Il messaggio vamesso SENZA WATCHDOG!!
+                muscite = MainForm->PlcIncas.uscite &= MainForm->bitAnd[4];
+                mdascrivere = MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[4];
+                if (mdascrivere != muscite)
+				    dmDB->LogMsg("Modificato uscite su PLC valore prec : " + IntToStr(MainForm->PlcIncas.uscite) + " , nuovo : " + IntToStr(MainForm->PlcIncas.uscitedascrivere));
 			}
 		}
 

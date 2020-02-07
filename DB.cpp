@@ -996,8 +996,8 @@ void TdmDB::LeggiStatoAgv() {
 						MainForm->DatiAgv[nagv].dest = Query2->FieldByName("dest")->AsInteger;
 						MainForm->DatiAgv[nagv].prel = Query2->FieldByName("prelievo")->AsInteger;
 						MainForm->DatiAgv[nagv].dep = Query2->FieldByName("deposito")->AsInteger;
-						MainForm->DatiAgv[nagv].IdUdc = Query2->FieldByName("idudc")->AsInteger;
-						MainForm->DatiAgv[nagv].IdUdcTest = Query2->FieldByName("idudc")->AsString ;
+						MainForm->DatiAgv[nagv].IdUdc = Query2->FieldByName("idudc")->AsString;
+						MainForm->DatiAgv[nagv].IdUdcTest = Query2->FieldByName("idudc")->AsString;
 					   //	MainForm->DatiAgv[nagv].tipopallet = Query2->FieldByName("TipoPallet")->AsInteger;
 					   //	MainForm->DatiAgv[nagv].formato_pallet = Query2->FieldByName("FormatoPallet")->AsInteger;
 						MainForm->DatiAgv[nagv].programma_fasciatura = Query2->FieldByName("ProgrammaFasciatura")->AsInteger;
@@ -1107,7 +1107,7 @@ void TdmDB::AggiornaStatoAgv(int agv) {
                 stringa = stringa + " , dest = " + IntToStr(MainForm->DatiAgv[i].dest);
                 stringa = stringa + " , loaded = " + IntToStr(MainForm->DatiAgv[i].load) + " , livellobatt = " + IntToStr(livello);
 				stringa = stringa + " , idmis = " + IntToStr(MainForm->DatiAgv[i].idmis);
-				stringa = stringa + " , idudc = " + MainForm->DatiAgv[i].IdUdc;
+				stringa = stringa + " , idudc = '" + MainForm->DatiAgv[i].IdUdc + "'";
 				//stringa = stringa + " , idudc = " + MainForm->DatiAgv[i].IdUdcTest;
 				//stringa = stringa + " , Tipopallet = " + IntToStr(MainForm->DatiAgv[i].tipopallet);
 				//stringa = stringa + " , Formatopallet = " + IntToStr(MainForm->DatiAgv[i].formato_pallet);
@@ -1450,7 +1450,7 @@ int TdmDB::GeneraMissione(TMissione m)
 				("INSERT INTO Missioni ( ID,POSPREL ,POSDEP, ESITO ,GENERATA,TIPOMISSIONE,PRIORITA,AGV,HPREL,"
 				"HDEP,PosPrelCliente,PosDepCliente,IdUdc,TraslPick,TraslDrop,TabCarico,TabScarico,ProgressivoMissione, ProgrammaFasciatura)"
 				 " VALUES (%d,%d,%d,'%s',%s,%d,%d,%d,%d"
-				 ",%d,'%s','%s',%d,%d,%d,%d,%d,%d,%d)"
+				 ",%d,'%s','%s','%s',%d,%d,%d,%d,%d,%d)"
 				 ,idmiss, m.posprel, m.posdep,"GENERATA", "GetDate()", m.tipo_mis, Priorita, m.Agv, m.h_prel
 				 ,m.h_dep,  m.Source.c_str(), m.Dest.c_str(), m.IdUdc, 0,0, m.tab_carico, m.tab_scarico
                  ,m.progressivo_missione, m.programma_fasciatura);
@@ -1523,7 +1523,7 @@ int TdmDB::GeneraMissioneDemo(int pos_prel, int h_prel, int pos_dep, int h_dep, 
             ADOQuery->Connection = ADOConnection1;
             strsql.printf
 				("INSERT INTO Missioni ( ID,POSPREL ,POSDEP, ESITO ,GENERATA," "TIPOMISSIONE,IdUdc,PRIORITA,AGV,HPREL,HDEP,HCORSIA,CORSIADEP,PIANOPREL,PIANODEP,POSPRELCLIENTE,POSDEPCLIENTE,CodiceUdc,Lotto)"
-                " VALUES (%d,%d,%d,'%s',%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,'%s','%s','%s','%s')", idmiss, pos_prel,
+                " VALUES (%d,%d,%d,'%s',%s,'%s',%d,%d,%d,%d,%d,%d,%d,%d,%d,'%s','%s','%s','%s')", idmiss, pos_prel,
                 pos_dep, "GENERATA", "GetDate()", tipo_mis, 0, Priorita, agv, h_prel, h_dep, 0, 0, 1, 1, nomebaiaprel.c_str(), nomebaiadep.c_str(), "0", "0");
             ADOQuery->SQL->Text = strsql;
             res = ADOQuery->ExecSQL();
@@ -3115,7 +3115,8 @@ int TdmDB::RicercaPrelievoUdcinCorsia(int tipologia, int tipologia2, int &priori
 
 
 
-void TdmDB::ArticoloPrelevatoDepositato(int pos, int idArticolo , int presenza) {
+void TdmDB::ArticoloPrelevatoDepositato(int pos, AnsiString idArticolo , int presenza) 
+{
 
     AnsiString stringa;
     AnsiString Locazione;
@@ -3130,7 +3131,7 @@ void TdmDB::ArticoloPrelevatoDepositato(int pos, int idArticolo , int presenza) 
         ADOQuery = new TADOQuery(NULL);
 		ADOQuery->Connection = ADOConnection1;
 		//stringa = "Update Piani set IdUdc = '" + idArticolo + "' , LarghezzaUdc = "+IntToStr(tipoudc)+", LarghezzaVassoio = "+IntToStr(tipovassoio)+" where NomePos = '" + nomepos+"'";
-		stringa = "UPDATE Posizioni SET IdUdc = " + IntToStr(idArticolo) + ",PresenzaPallet = "+IntToStr(presenza)+"  WHERE Pos = " + IntToStr(pos);
+		stringa = "UPDATE Posizioni SET IdUdc = '" + idArticolo + "',PresenzaPallet = "+IntToStr(presenza)+"  WHERE Pos = " + IntToStr(pos);
 		ADOQuery->SQL->Clear();
         ADOQuery->SQL->Text = stringa;
         res = ADOQuery->ExecSQL();
@@ -3306,7 +3307,7 @@ void TdmDB::AbortMission(int idmiss) {
 		if (progressivo_wms)
         {
             dmDB->UpdateStatoCaricamento(progressivo_wms, STATO_ABORTITA);
-            dmDB->UpdatePosCarico(prel, 0, 0);   //mette UDC = 0  e ID caricamento = 0
+            dmDB->UpdatePosCarico(Source, "", 0);   //mette UDC = 0  e ID caricamento = 0
             //linea_prel = DMGestioneEventi->RitornaLineaPrelievoDaPos(prel);
             dmDB->LogMsg("Aggiorno stato missione ad ABORT su linea WMS "+IntToStr(progressivo_wms));
         }
@@ -3435,6 +3436,25 @@ int TdmDB::PosizioneDaCustomerPos(AnsiString customerpos)
         {
             res = i->second["POS"].ToIntDef(0);
             break;
+        }
+    }
+
+    return res;
+}
+
+AnsiString TdmDB::AlmenoUnUdcInPos(int pos) 
+{
+    IndexListIterator i;
+    AnsiString res = ""; // ricerco se c'è almeno un UDC su uno dei 2 piani
+
+    for (i = TabCustomerPos.begin(); i != TabCustomerPos.end(); i++) 
+    {
+        if (i->second["POS"].ToIntDef(0) == pos) 
+        {
+            if (i->second["IDUDC"] != "" && i->second["IDUDC"] != NULL) 
+            {
+                res = i->second["IDUDC"];                
+            }
         }
     }
 
@@ -4547,7 +4567,7 @@ int TdmDB::UpdateSoloStato(int pos, int prenota, int escludi)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Aggiorna la presenza UDC nella pos carico - nella "presenzaPallet mette l'ID della tabella di caricamento per comodità
 //
-int TdmDB::UpdatePosCarico(int Pos, int tudc, int idcar)
+int TdmDB::UpdatePosCarico(AnsiString PosCli, AnsiString tudc, int idcar)
 {
     AnsiString stringa;
     TADOQuery *ADOQuery;
@@ -4561,7 +4581,7 @@ int TdmDB::UpdatePosCarico(int Pos, int tudc, int idcar)
 
     try
     {
-        stringa.printf("UPDATE Posizioni SET IDUDC = %d, PresenzaPallet = %d  WHERE Pos = '%d'", tudc, idcar, Pos);
+        stringa.printf("UPDATE Posizioni SET IDUDC = '%s', PresenzaPallet = %d  WHERE CustomerPos = '%s'", tudc, idcar, PosCli);
 
         ADOQuery->SQL->Clear();
         ADOQuery->SQL->Text = stringa;
@@ -4571,7 +4591,7 @@ int TdmDB::UpdatePosCarico(int Pos, int tudc, int idcar)
     }
     catch (...)
     {
-        LogMsg("Eccezione UpdatePosCarico, Pos = " + IntToStr(Pos));
+        LogMsg("Eccezione UpdatePosCarico, CustomerPos = " + PosCli);
     }
     delete ADOQuery;
     return res;

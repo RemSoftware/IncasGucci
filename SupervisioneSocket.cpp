@@ -340,7 +340,7 @@ void SUPERVISIONEMISS_STATESOCKET::Elabora(char *ev, TCustomWinSocket *Socket) {
 					prel = dmDB->QueryMissioniSocket->FieldByName("posprel")->AsInteger;
 					posdep = dmDB->QueryMissioniSocket->FieldByName("posdep")->AsInteger;
                     tipopos = dmDB->RitornaTipoPos(prel);
-  					MainForm->DatiAgv[nagv].IdUdc = dmDB->QueryMissioniSocket->FieldByName("IdUdc")->AsInteger;
+  					MainForm->DatiAgv[nagv].IdUdc = dmDB->QueryMissioniSocket->FieldByName("IdUdc")->AsString;
 					MainForm->DatiAgv[nagv].programma_fasciatura = dmDB->QueryMissioniSocket->FieldByName("ProgrammaFasciatura")->AsInteger;
    					MainForm->DatiAgv[nagv].dest = dmDB->QueryMissioniSocket->FieldByName("posdep")->AsInteger;
 					Source = dmDB->QueryMissioniSocket->FieldByName("PosPrelCliente")->AsString;
@@ -373,7 +373,7 @@ void SUPERVISIONEMISS_STATESOCKET::Elabora(char *ev, TCustomWinSocket *Socket) {
                 }  */
                 
 				MainForm->DatiAgv[nagv].consensodato = 0;
-				dmDB->ArticoloPrelevatoDepositato(prel,0,0);
+				dmDB->ArticoloPrelevatoDepositato(prel,"",0);
 				if (dmDB->FilaPosizione(prel) > 0 ) {
 					if (dmDB->ContaPalletInCorsia(dmDB->FilaPosizione(prel))) 
                     {
@@ -434,7 +434,7 @@ void SUPERVISIONEMISS_STATESOCKET::Elabora(char *ev, TCustomWinSocket *Socket) {
 					if (posdep == MainForm->PlcFascia.posdep) 
                     {
 						//dmDB->GetSSCCrecordStructPlc(IdUdc, DatiDaScrivere);
-						if (IdUdc.ToIntDef(0) == 0)
+						if (IdUdc == "" || IdUdc == NULL)
 							DatiDaScrivere.prgfasciatura = programma_fasciatura;
                         else
                         {
@@ -443,7 +443,7 @@ void SUPERVISIONEMISS_STATESOCKET::Elabora(char *ev, TCustomWinSocket *Socket) {
                         
 						//TDMgestionePLC->ScriviDatiUdcSuPlc(MainForm->PlcFascia.inizio_indice_dati_sscc_pos_deposito,DatiDaScrivere);
 					}
-                    if (tipopos == DEF_TYPE && IdUdc.ToIntDef(0) != 0)    //se è una POS di magazzino e ho SSCC
+                    if (tipopos == DEF_TYPE && IdUdc != "" && IdUdc != NULL)    //se è una POS di magazzino e ho SSCC
                     {
 						dmDB->UpdateStorageState(IdUdc);                 // aggiorno stato depositato in magazzino
                     }
@@ -468,7 +468,7 @@ void SUPERVISIONEMISS_STATESOCKET::Elabora(char *ev, TCustomWinSocket *Socket) {
 				MainForm->DatiAgv[nagv].consensodato = 0 ;
 				MainForm->DatiAgv[nagv].annullamissione = 0 ;
 				MainForm->DatiAgv[nagv].richiestaconsenso = 0 ;
-				MainForm->DatiAgv[nagv].IdUdc = 0;
+				MainForm->DatiAgv[nagv].IdUdc = "";
 				MainForm->DatiAgv[nagv].tipopallet = 0 ;
 				MainForm->DatiAgv[nagv].formato_pallet = 0 ;
 				MainForm->DatiAgv[nagv].programma_fasciatura = 0 ;
@@ -497,22 +497,22 @@ void SUPERVISIONEMISS_STATESOCKET::Elabora(char *ev, TCustomWinSocket *Socket) {
 				//guardo se devo uscire dall'ingombro
 				//linea_prel = DMGestioneEventi->RitornaLineaPrelievoDaPos(prel);
 
-				if (NoPrel != "")           // guarda se mantenere questa differenza (adesso fa la stessa cosa)
+				if (NoPrel != "")           // è stato prelevato? SI
                 {
 					if (progressivo_wms)
                     {
 						dmDB->LogMsg("Aggiorno stato missione ad ABORT su linea WMS "+IntToStr(progressivo_wms));
-                        dmDB->UpdateStatoCaricamento(progressivo_wms, STATO_ABORTITA);
-                        dmDB->UpdatePosCarico(prel, 0, 0);   //mette UDC = 0  e ID caricamento = 0
+                        dmDB->UpdateStatoCaricamento(progressivo_wms, STATO_ABORT_PREL);
+                        dmDB->UpdatePosCarico(Source, "", 0);   //mette UDC = 0  e ID caricamento = 0
                     }
 				}
-                else if (IdUdc.ToIntDef(0))
+                else if (IdUdc != "" && IdUdc != NULL)    //NO
                 {
                     if (progressivo_wms)
                     {
 						dmDB->LogMsg("Aggiorno stato missione ad ABORT su linea WMS "+IntToStr(progressivo_wms));
-                        dmDB->UpdateStatoCaricamento(progressivo_wms, STATO_ABORTITA);
-                        dmDB->UpdatePosCarico(prel, 0, 0);   //mette UDC = 0  e ID caricamento = 0
+                        dmDB->UpdateStatoCaricamento(progressivo_wms, STATO_ABORT_NOPREL);
+                        dmDB->UpdatePosCarico(Source, "", 0);   //mette UDC = 0  e ID caricamento = 0
 					}
 				}
 
@@ -561,7 +561,7 @@ void SUPERVISIONEMISS_STATESOCKET::Elabora(char *ev, TCustomWinSocket *Socket) {
 				MainForm->DatiAgv[nagv].consensodato = 0 ;
                 if (!MainForm->DatiAgv[nagv].load) 
                 {
-				    MainForm->DatiAgv[nagv].IdUdc = 0;
+				    MainForm->DatiAgv[nagv].IdUdc = "";
                 }
 				MainForm->DatiAgv[nagv].tipopallet = 0 ;
 				MainForm->DatiAgv[nagv].formato_pallet = 0 ;

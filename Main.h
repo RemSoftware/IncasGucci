@@ -258,7 +258,9 @@ __published:
     void __fastcall PanelIncrocioMouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
     void __fastcall CaricaPalletDaPiano1(TObject * Sender); 
-    void __fastcall CaricaPalletDaPiano2(TObject * Sender); 
+    void __fastcall CaricaPalletDaPiano2(TObject * Sender);
+    void __fastcall PanelSemaforoMouseDown(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y); 
 
 private:
     template<class T>
@@ -312,8 +314,8 @@ public:
 		int tipopallet;
 		int formato_pallet ;
 		int programma_fasciatura ;
-		int IdUdc;
         int stato;
+		AnsiString IdUdc;
 		AnsiString IdUdcTest;
 		AnsiString DataOraFineCarica, imgfile, imgfile_agv;
         AnsiString DataOraAttesa, strcons,NomePosPrel,NomePosDep;

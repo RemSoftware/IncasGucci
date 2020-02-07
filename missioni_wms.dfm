@@ -2,23 +2,24 @@ inherited fMissioniWms: TfMissioniWms
   Left = 206
   Top = 154
   Caption = 'Missioni Generate Linee di Carico'
-  ClientHeight = 617
+  ClientHeight = 660
   ClientWidth = 1484
   Position = poDesigned
   OnActivate = FormActivate
+  ExplicitTop = -17
   ExplicitWidth = 1500
-  ExplicitHeight = 656
+  ExplicitHeight = 699
   PixelsPerInch = 96
   TextHeight = 19
   inherited PanelButtons: TPanel
-    Left = 1350
+    Left = 1317
     Top = 105
-    Width = 134
-    Height = 512
-    ExplicitLeft = 1350
+    Width = 167
+    Height = 555
+    ExplicitLeft = 1317
     ExplicitTop = 105
-    ExplicitWidth = 134
-    ExplicitHeight = 512
+    ExplicitWidth = 167
+    ExplicitHeight = 555
     object Label2: TLabel [0]
       Left = 0
       Top = 19
@@ -92,7 +93,7 @@ inherited fMissioniWms: TfMissioniWms
     end
     object Label6: TLabel [5]
       Left = 11
-      Top = 164
+      Top = 165
       Width = 69
       Height = 16
       Caption = '3: Prelevata'
@@ -105,7 +106,7 @@ inherited fMissioniWms: TfMissioniWms
     end
     object Label7: TLabel [6]
       Left = 11
-      Top = 184
+      Top = 186
       Width = 76
       Height = 16
       Caption = '4: Depositata'
@@ -118,10 +119,10 @@ inherited fMissioniWms: TfMissioniWms
     end
     object Label8: TLabel [7]
       Left = 11
-      Top = 204
-      Width = 61
+      Top = 207
+      Width = 147
       Height = 16
-      Caption = '5: Abortita'
+      Caption = '5: Abortita senza prelievo'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -130,8 +131,8 @@ inherited fMissioniWms: TfMissioniWms
       ParentFont = False
     end
     object Label13: TLabel [8]
-      Left = 10
-      Top = 225
+      Left = 11
+      Top = 248
       Width = 85
       Height = 16
       Caption = '10: Errore Dati'
@@ -144,7 +145,7 @@ inherited fMissioniWms: TfMissioniWms
     end
     object Label11: TLabel [9]
       Left = 11
-      Top = 144
+      Top = 145
       Width = 57
       Height = 16
       Caption = '2: Iniziata'
@@ -157,7 +158,7 @@ inherited fMissioniWms: TfMissioniWms
     end
     object Label10: TLabel [10]
       Left = 11
-      Top = 247
+      Top = 269
       Width = 105
       Height = 16
       Caption = '55: Abortita da PC'
@@ -168,16 +169,29 @@ inherited fMissioniWms: TfMissioniWms
       Font.Style = []
       ParentFont = False
     end
+    object Label12: TLabel [11]
+      Left = 11
+      Top = 227
+      Width = 134
+      Height = 16
+      Caption = '6: Abortita con prelievo'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
     inherited PanelClose: TPanel
-      Top = 448
-      Width = 132
+      Top = 491
+      Width = 165
       Height = 63
       ExplicitTop = 448
       ExplicitWidth = 132
       ExplicitHeight = 63
       inherited BitBtnClose: TBitBtn
         Top = 7
-        Width = 126
+        Width = 159
         Height = 53
         Glyph.Data = {00000000}
         ExplicitTop = 7
@@ -188,8 +202,8 @@ inherited fMissioniWms: TfMissioniWms
     object BtnDelete: TBitBtn
       AlignWithMargins = True
       Left = 4
-      Top = 391
-      Width = 126
+      Top = 434
+      Width = 159
       Height = 54
       Align = alBottom
       Caption = 'Cancella linea'
@@ -260,12 +274,14 @@ inherited fMissioniWms: TfMissioniWms
       Spacing = 10
       TabOrder = 1
       OnClick = BtnDeleteClick
+      ExplicitTop = 391
+      ExplicitWidth = 126
     end
     object BtnAbort: TBitBtn
       AlignWithMargins = True
       Left = 4
-      Top = 331
-      Width = 126
+      Top = 374
+      Width = 159
       Height = 54
       Align = alBottom
       Caption = 'ABORT linea'
@@ -336,12 +352,14 @@ inherited fMissioniWms: TfMissioniWms
       Spacing = 10
       TabOrder = 2
       OnClick = BtnAbortClick
+      ExplicitTop = 331
+      ExplicitWidth = 126
     end
     object InsertBtn: TBitBtn
       AlignWithMargins = True
       Left = 4
-      Top = 271
-      Width = 126
+      Top = 314
+      Width = 159
       Height = 54
       Align = alBottom
       Caption = 'Inserisci linea'
@@ -488,6 +506,8 @@ inherited fMissioniWms: TfMissioniWms
       TabOrder = 3
       Visible = False
       OnClick = InsertBtnClick
+      ExplicitTop = 271
+      ExplicitWidth = 126
     end
   end
   inherited PanelTitle: TPanel
@@ -738,8 +758,8 @@ inherited fMissioniWms: TfMissioniWms
     AlignWithMargins = True
     Left = 3
     Top = 108
-    Width = 1344
-    Height = 506
+    Width = 1311
+    Height = 549
     Align = alClient
     DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
