@@ -1122,6 +1122,8 @@ void TdmDB::AggiornaStatoAgv(int agv) {
 					stringa = stringa + " , Abilitazioni = " + IntToStr(abilitazioni);
 					stringa = stringa + " , PosizioniLuceRossaSemaforo = '"+MainForm->PosizioniLuceRossaSemaforo+"'";
 					stringa = stringa + " , PosizioniLuceGiallaSemaforo = '"+MainForm->PosizioniLuceGiallaSemaforo+"'";
+					stringa = stringa + " , PosPrelCliente = '" + MainForm->DatiAgv[i].NomePosPrel +"'";
+					stringa = stringa + " , PosDepCliente = '" + MainForm->DatiAgv[i].NomePosDep +"'";
                 }
                 stringa = stringa + " , Allarmi = '" + allarmi + "' where id = " + IntToStr(i);
 

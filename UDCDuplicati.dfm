@@ -5,7 +5,7 @@ object FormUDCDuplicati: TFormUDCDuplicati
   BorderStyle = bsSingle
   Caption = 'Items'
   ClientHeight = 215
-  ClientWidth = 846
+  ClientWidth = 1048
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBlue
@@ -21,7 +21,7 @@ object FormUDCDuplicati: TFormUDCDuplicati
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 846
+    Width = 1048
     Height = 41
     Align = alTop
     Caption = 'Dati della View AGV'
@@ -32,28 +32,30 @@ object FormUDCDuplicati: TFormUDCDuplicati
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 0
+    ExplicitWidth = 846
   end
   object Panel3: TPanel
     Left = 0
     Top = 41
-    Width = 846
+    Width = 1048
     Height = 174
     Align = alClient
     BevelOuter = bvLowered
     TabOrder = 1
-    ExplicitHeight = 400
+    ExplicitWidth = 846
     object Panel4: TPanel
       Left = 1
       Top = 1
-      Width = 844
+      Width = 1046
       Height = 328
       Align = alTop
       BevelOuter = bvLowered
       TabOrder = 0
+      ExplicitWidth = 844
       object DBGrid1: TDBGrid
         Left = 1
         Top = 1
-        Width = 842
+        Width = 1044
         Height = 326
         Align = alClient
         DataSource = DataSource1
@@ -152,30 +154,47 @@ object FormUDCDuplicati: TFormUDCDuplicati
             Title.Alignment = taCenter
             Width = 89
             Visible = True
+          end
+          item
+            Alignment = taCenter
+            Expanded = False
+            FieldName = 'POSPRELCLIENTE'
+            Title.Alignment = taCenter
+            Width = 100
+            Visible = True
+          end
+          item
+            Alignment = taCenter
+            Expanded = False
+            FieldName = 'POSDEPCLIENTE'
+            Title.Alignment = taCenter
+            Width = 100
+            Visible = True
           end>
       end
     end
     object Panel5: TPanel
       Left = 1
       Top = 329
-      Width = 844
+      Width = 1046
       Height = 128
       Align = alTop
       BevelOuter = bvLowered
       TabOrder = 1
+      ExplicitWidth = 844
     end
     object Panel6: TPanel
       Left = 1
       Top = 109
-      Width = 844
+      Width = 1046
       Height = 64
       Align = alBottom
       BevelOuter = bvLowered
       TabOrder = 2
-      ExplicitTop = 335
+      ExplicitWidth = 844
       object BitBtn8: TBitBtn
-        Left = 336
-        Top = 4
+        Left = 438
+        Top = 5
         Width = 169
         Height = 54
         Caption = 'Chiudi'
@@ -296,12 +315,12 @@ object FormUDCDuplicati: TFormUDCDuplicati
     Parameters = <>
     SQL.Strings = (
       'select * from tipologiaArticoli')
-    Left = 684
-    Top = 103
+    Left = 707
+    Top = 167
   end
   object DataSource1: TDataSource
     DataSet = ADOQuery1
-    Left = 772
-    Top = 98
+    Left = 769
+    Top = 167
   end
 end
