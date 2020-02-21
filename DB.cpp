@@ -1248,6 +1248,7 @@ void TdmDB::GestioneAllarmi(int agv) {
                                         MainForm->DatiAgv[nagv].alarm = true;
                                     }
                                     MainForm->MessageBar1->AddMsgNo(StrToInt(messalarm));
+                                    ActiveAlarm(MainForm->MessageBar1->Messages->Strings[StrToInt(messalarm)]);
                                 }
                             }
                             else
@@ -4923,6 +4924,44 @@ int TdmDB::AggiornaESvuotaPosDeposito()
 	catch (...)
 	{
         LogMsg("Eccezione AggiornaESvuotaPosDeposito, query = " + stringa);
+	}
+	delete ADOQuery;
+	return 0;
+}
+
+// ---------------------------------------------------------------------------
+
+int TdmDB::ActiveAlarm(AnsiString sMsg)
+{
+	// Posizioni Vuoti
+	AnsiString stringa;
+	TADOQuery *ADOQuery;
+	int res = 0;
+
+	if (!ADOConnection1->Connected)
+		return 0;
+
+	ADOQuery = new TADOQuery(NULL);
+	ADOQuery->Connection = ADOConnection1;
+
+	try
+	{
+		//stringa.printf("UPDATE ActiveAlarm SET Description = '%s'  WHERE AlarmNumber = 1", sMsg);
+
+        stringa.printf("IF EXISTS(SELECT * FROM ActiveAlarm WHERE AlarmNumber=1) "
+                       "   UPDATE ActiveAlarm SET Description ='%s' WHERE AlarmNumber=1 "
+                       " ELSE "
+                       "   INSERT INTO ActiveAlarm(AlarmNumber, Description, Active) VALUES(1, '%s', 0)", sMsg, sMsg);
+
+		ADOQuery->SQL->Clear();
+		ADOQuery->SQL->Text = stringa;
+		res = ADOQuery->ExecSQL();
+		ADOQuery->Close();
+		dmDB->LogMsg(stringa);
+	}
+	catch (...)
+	{
+        LogMsg("Eccezione ActiveAlarm, query = " + stringa);
 	}
 	delete ADOQuery;
 	return 0;

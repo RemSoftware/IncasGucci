@@ -259,7 +259,8 @@ void __fastcall TDMGestioneEventi::TimerMissioniTimer(TObject * Sender)
 		try 
         {
 			if ((MainForm->DatiAgv[1].pos > 0) && (!MainForm->DatiAgv[1].manuale ) && (!MainForm->DatiAgv[1].bitbattbassa)
-		    && (!MainForm->DatiAgv[1].alarm) && (!MainForm->DatiAgv[1].semiautomatico ) && (!MainForm->DatiAgv[1].generata ))
+		    && (!MainForm->DatiAgv[1].alarm) && (!MainForm->DatiAgv[1].semiautomatico ) && (!MainForm->DatiAgv[1].generata )
+            && ((MainForm->PlcIncas.PlcConnesso && !PLCThread[0]->alarm_watchdog) || MainForm->Simula))
             {
                 line = 0;
                    

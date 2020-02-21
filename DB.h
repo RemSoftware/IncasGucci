@@ -233,6 +233,7 @@ private: // User declarations
     int AggiornaESvuotaPosDeposito();
     void PrenotaPosIntera(int pos,int prenota); 
     AnsiString AlmenoUnUdcInPos(int pos); 
+    int ActiveAlarm(AnsiString sMsg);
 
 
     TIndexList m_TabCorsie, TabParametri;

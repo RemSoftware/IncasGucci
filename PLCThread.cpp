@@ -136,7 +136,7 @@ void __fastcall TPLCThread::Execute()
                     }
 				}
 				if (PLCError == 0) {
-					tentativi = 0;
+					//tentativi = 0;   //PROVA PER FARLO RICONNETTERE
 					Step++;
 					if ((Step >= N_BLOCKS_TOTAL)||(Step == 0)) {
 						Step = 0;
@@ -155,7 +155,8 @@ void __fastcall TPLCThread::Execute()
 						DisconnettiPLC();
                         tentativi = 0 ;
                     }
-                    ErrorString = daveStrerror(PLCError) ;
+                    ErrorString = daveStrerror(PLCError);
+                    ErrorString = ErrorString + "- R";
 					Step++;
 					if ((Step >= N_BLOCKS_TOTAL)||(Step == 0)) {
 						Step = 0;
@@ -193,14 +194,17 @@ void __fastcall TPLCThread::Execute()
 				}
 
 				if (PLCError == 0) {
-					tentativi = 0;
+					//tentativi = 0;   //PROVA PER FARLO RICONNETTERE
 					AsyncCom.erase(AsyncCom.begin());
 				}
 				else {
 					tentativi++;
-					ErrorString = daveStrerror(PLCError) ;
-					if (tentativi > 10)
+					ErrorString = daveStrerror(PLCError);
+					ErrorString = ErrorString + "- W";
+					if (tentativi > 10) {
 						DisconnettiPLC();
+                        tentativi = 0;
+                    }
 				}
 			}
 			Sleep(50);

@@ -91,21 +91,25 @@ void __fastcall TfAGV::TimerUpdTimer(TObject *Sender)
 		frAgvL->cbLoaded->Checked = MainForm->DatiAgv[i].load ;
 		frAgvL->cbCarica->Checked = MainForm->DatiAgv[i].incarica ;
 		frAgvL->cbBattBassa->Checked = MainForm->DatiAgv[i].bitbattbassa ;
-		frAgvL->leIdArticolo->Text = MainForm->DatiAgv[i].IdUdc;
+		//frAgvL->leIdArticolo->Text = MainForm->DatiAgv[i].IdUdc;
+		frAgvL->leIdArticolo->Visible = false;
 		frAgvL->lePrel->Text = MainForm->DatiAgv[i].prel;
 		frAgvL->leDest->Text = MainForm->DatiAgv[i].dep;
-		frAgvL->leFasciatura->Text = MainForm->DatiAgv[i].programma_fasciatura;
+		//frAgvL->leFasciatura->Text = MainForm->DatiAgv[i].programma_fasciatura;
+		frAgvL->leFasciatura->Visible = false;
 		//frAgvL->leFormato->Text = MainForm->DatiAgv[i].formato_pallet;
 
 		if ((!first)&&(((MainForm->DatiAgv[i].load)&&(!frAgvL->cbLoaded->Checked))||
 			((MainForm->DatiAgv[i].load)&&(!frAgvL->cbLoaded->Checked))))
 			first = true ; // ricarico dati pallet
 
-		if (first) {
+		if (first) 
+        {/*
 			if (MainForm->DatiAgv[i].load)
 				frAgvL->leCodicePallet->Text = dmDB->ReturnTipoPalletStr(MainForm->DatiAgv[i].tipopallet);
 			else
-				frAgvL->leCodicePallet->Text = "Nessun Pallet";
+				frAgvL->leCodicePallet->Text = "Nessun Pallet";   */
+            frAgvL->leCodicePallet->Visible = false;
 		}
 		if ((first)||(!MainForm->pwdlevel))
 			frAgvL->cbInMissione->Checked = MainForm->DatiAgv[i].generata ;

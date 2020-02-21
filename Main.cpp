@@ -1033,7 +1033,7 @@ void __fastcall TMainForm::MainStatusBarDrawPanel(TStatusBar * StatusBar, TStatu
         }
         
 		if (PLCThread[0]->PLCError == 0)
-	    	Panel->Text = "PLC Incas WD: Plc " + IntToStr(PLCThread[0]->watchdog_plc) + " ; Pc " + IntToStr(PLCThread[0]->watchdog_pc);
+	    	Panel->Text = "PLC Incas WD: Plc " + IntToStr(PLCThread[0]->watchdog_plc) + " ; Pc " + IntToStr(PLCThread[0]->watchdog_pc) + " ; Try " + IntToStr(PLCThread[0]->tentativi);
 		else
 			Panel->Text = "PLC Incas " + PLCThread[0]->ErrorString;
             

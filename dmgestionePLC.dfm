@@ -30,4 +30,10 @@ object TDMgestionePLC: TTDMgestionePLC
     Left = 170
     Top = 34
   end
+  object TimerSemaforo: TTimer
+    Enabled = False
+    OnTimer = TimerSemaforoTimer
+    Left = 195
+    Top = 135
+  end
 end

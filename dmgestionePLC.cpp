@@ -45,6 +45,7 @@ __fastcall TTDMgestionePLC::TTDMgestionePLC(TComponent* Owner)
     : TDataModule(Owner)
 {
 	init = true;
+    timerosso = 0;
 }
 
 //---------------------------------------------------------------------------
@@ -129,6 +130,7 @@ void __fastcall TTDMgestionePLC::TimerPlcTimer(TObject *Sender)
 				if (PLCThread[0]->count_alarm_watchdog >= 20) {
 					if (!PLCThread[0]->alarm_watchdog) {
                         MainForm->MessageBar1->AddMsgNo(PLCThread[0]->num_alarm_watchdog);
+                        dmDB->ActiveAlarm(MainForm->MessageBar1->Messages->Strings[PLCThread[0]->num_alarm_watchdog]);
 						PLCThread[0]->alarm_watchdog = 1;
                     }
 					PLCThread[0]->count_alarm_watchdog = 0;
@@ -297,38 +299,6 @@ void __fastcall TTDMgestionePLC::TimerPlcTimer(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
-
-int TTDMgestionePLC::AgvInPosLuceSemaforoRossa()
-{
-	int i, res = 0;
-	for (i = 1; i <= N_carrelli; i++) 
-    {
-		if (MainForm->PosizioniLuceRossaSemaforo.Pos(";" + IntToStr(MainForm->DatiAgv[i].pos) + ";")) 
-        {
-			res = i;
-			break;
-		}
-	}
-	return res;
-}
-
-//---------------------------------------------------------------------------
-
-int TTDMgestionePLC::AgvInPosLuceSemaforoGialla()
-{
-	int i, res = 0;
-	for (i = 1; i <= N_carrelli; i++) 
-    {
-		if (MainForm->PosizioniLuceGiallaSemaforo.Pos(";" + IntToStr(MainForm->DatiAgv[i].pos) + ";")) 
-        {
-			res = i;
-			break;
-		}
-	}
-	return res;
-}
-
-//---------------------------------------------------------------------------
 /*
 void TTDMgestionePLC::GetArrivalTime(int nLinea, int input, int bit)
 {
@@ -416,6 +386,7 @@ void __fastcall TTDMgestionePLC::TimerEventiTimer(TObject *Sender)
     if ((!MainForm->alarmmissioni) && (!MainForm->AbilitaMissioni)) 
     {
 		MainForm->MessageBar1->AddMsgNo(200);
+        dmDB->ActiveAlarm(MainForm->MessageBar1->Messages->Strings[200]);
 		MainForm->alarmmissioni = 1;
 	}
 	else if ((MainForm->alarmmissioni) && (MainForm->AbilitaMissioni))
@@ -551,6 +522,60 @@ void TTDMgestionePLC::ControlloIngressoFasciatore()
 
 //---------------------------------------------------------------------------
 
+void __fastcall TTDMgestionePLC::TimerSemaforoTimer(TObject *Sender)
+{
+//    
+}
+
+//---------------------------------------------------------------------------
+
+int TTDMgestionePLC::AgvInPosLuceSemaforoRossa()
+{
+    /*
+	int i, res = 0;
+	for (i = 1; i <= N_carrelli; i++) 
+    {
+		if (MainForm->PosizioniLuceRossaSemaforo.Pos(";" + IntToStr(MainForm->DatiAgv[i].pos) + ";")) 
+        {
+			res = i;
+			break;
+		}
+	}
+	return res;  */
+	int res = 0;
+    
+    if (((MainForm->PlcIncas.impegno_inc_giallo) && (!MainForm->PlcIncas.impegno_inc_rosso) && (timerosso<=0)) ||
+        ((MainForm->PlcIncas.impegno_inc_giallo) && (MainForm->PlcIncas.impegno_inc_rosso) && (timerosso<=0)) ||
+         (MainForm->PosizioniLuceRossaSemaforo.Pos(";" + IntToStr(MainForm->DatiAgv[1].pos) + ";"))) 
+    {
+       res = 1;  
+    }
+
+    if ((MainForm->PlcIncas.impegno_inc_giallo) && (timerosso>0)) 
+    {
+        timerosso -= 1;   
+    }
+    return res;
+}
+
+//---------------------------------------------------------------------------
+
+int TTDMgestionePLC::AgvInPosLuceSemaforoGialla()
+{
+	int i, res = 0;
+	for (i = 1; i <= N_carrelli; i++) 
+    {
+		if (MainForm->PosizioniLuceGiallaSemaforo.Pos(";" + IntToStr(MainForm->DatiAgv[i].pos) + ";")) 
+        {
+			res = i;
+			break;
+		}
+	}
+	return res;
+}
+
+//---------------------------------------------------------------------------
+
 void TTDMgestionePLC::ControlloSemaforo()
 {
     int setta_luce_rossa, setta_luce_gialla;
@@ -578,6 +603,7 @@ void TTDMgestionePLC::ControlloSemaforo()
             {
                 MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[MainForm->PlcIncas.bit_impegno_inc_giallo];
                 dmDB->LogMsg("Accendo Luce Gialla con Agv in pos "+IntToStr(MainForm->DatiAgv[1].pos));
+                timerosso = 2; //parte il timer per accendere il rosso che si accende 3 sec dopo il giallo
             }
             else if ((MainForm->PlcIncas.impegno_inc_giallo) &&(!setta_luce_gialla)) 
             {
@@ -908,12 +934,12 @@ void TTDMgestionePLC::ControlloIncrocioAGV1()
     {
         if ((!agv_ingombro) && (MainForm->PlcIncas.richiesta_impegno_incrocio) && (!MainForm->PlcIncas.consenso_impegno_incrocio)) 
         {
-            dmDB->LogMsg("Setto OK ad incrocio a AGV1 con il mio Agv in pos " + IntToStr(MainForm->DatiAgv[agv].pos) + " , dest " + IntToStr(MainForm->DatiAgv[agv].dest));
+            dmDB->LogMsg("Setto OK ad incrocio a AGV1 con il mio Agv in pos " + IntToStr(MainForm->DatiAgv[1].pos) + " , dest " + IntToStr(MainForm->DatiAgv[1].dest) + " , consenso " + IntToStr(MainForm->DatiAgv[1].consensodato));
             MainForm->PlcIncas.uscitedascrivere |= MainForm->bit[MainForm->PlcIncas.bit_consenso_impegno_incrocio];
         }
         else if ((!MainForm->PlcIncas.richiesta_impegno_incrocio) && (MainForm->PlcIncas.consenso_impegno_incrocio)) 
         {
-            dmDB->LogMsg("REsetto OK ad incrocio a AGV1 con il mio Agv in pos " + IntToStr(MainForm->DatiAgv[agv].pos) + " , dest " + IntToStr(MainForm->DatiAgv[agv].dest));
+            dmDB->LogMsg("REsetto OK ad incrocio a AGV1 con il mio Agv in pos " + IntToStr(MainForm->DatiAgv[1].pos) + " , dest " + IntToStr(MainForm->DatiAgv[1].dest));
             MainForm->PlcIncas.uscitedascrivere &= MainForm->bitAnd[MainForm->PlcIncas.bit_consenso_impegno_incrocio];
         }
     }

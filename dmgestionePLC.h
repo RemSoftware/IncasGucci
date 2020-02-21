@@ -15,11 +15,13 @@ __published:	// IDE-managed Components
     TTimer *TimerPlc;
     TTimer *TimerPhoenix;
     TTimer *TimerAllarmi;
+    TTimer *TimerSemaforo;
     void __fastcall DataModuleCreate(TObject *Sender);
     void __fastcall TimerPlcTimer(TObject *Sender);
     void __fastcall TimerEventiTimer(TObject *Sender);
     void __fastcall TimerPhoenixTimer(TObject *Sender);
     void __fastcall TimerAllarmiTimer(TObject *Sender);
+    void __fastcall TimerSemaforoTimer(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
     __fastcall TTDMgestionePLC(TComponent* Owner);
@@ -40,7 +42,7 @@ public:		// User declarations
     int PosInIngombroAGV1(int pos);
     
 	bool init;
-    int id_lampeggio_sync;
+    int id_lampeggio_sync, timerosso;
     bool sync_lamp;
 };
 //---------------------------------------------------------------------------
